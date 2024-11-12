@@ -16,7 +16,7 @@ void generateMazeDFS(Maze* maze, Stack* stack){
     // Loop while the stack is NOT empty
     while (!isEmpty(stack)){
         // Pop off the stack
-        current = stackPop(stack);
+        current = stackPop(stack);  
         
         // Make a list of neighbors
         Cell* unvisitedNeighborsList[4];
@@ -45,7 +45,7 @@ void generateMazeDFS(Maze* maze, Stack* stack){
             if(chosenNeighbor->x == maze->endX && chosenNeighbor->y == maze->endY){
                 chosenNeighbor->data = 'E';
             } else {
-                chosenNeighbor->data = '.';
+                chosenNeighbor->data = ' ';
             }
 
             chosenNeighbor->visited = true;
