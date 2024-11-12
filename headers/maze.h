@@ -6,11 +6,17 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-typedef struct cell {
-    int x;
-    int y;
-    char data;
-    bool visited;
+#define TOP_WALL 0x01    // 0001
+#define RIGHT_WALL 0x02  // 0010
+#define BOTTOM_WALL 0x04 // 0100
+#define LEFT_WALL 0x08   // 1000
+
+typedef struct cell{
+  int x;
+  int y;
+  bool visited;
+  unsigned char data;
+  unsigned char walls;
 } Cell;
 
 typedef struct stack{
@@ -19,33 +25,31 @@ typedef struct stack{
     Cell** data; // Array of Cell Pointers
 } Stack;
 
-typedef struct maze {
-    Cell*** array; // 2D array of cells
-    int size; // Width and Height
-    int startX; // Start position of the maze
+typedef struct maze{
+    Cell*** map;
+    unsigned size;
+    int startX;
     int startY;
     int endX;
-    int endY; // End position of the maze;
+    int endY;
 } Maze;
 
 // Initialization
-Maze* initMaze(int size, int sX, int sY, int eX, int eY);
+Cell* initCell(int x, int y);
 Stack* initStack(unsigned capacity);
-Cell* initCell(int x, int y, char data);
+Maze* initMaze(unsigned size, int sX, int sY, int eX, int eY);
 
 // Rendering
 void displayMaze(Maze* maze);
-
-// Operations
-void generateMaze(Maze* maze, Stack* stack);
-void stackPush(Stack* stack, Cell* value);
-Cell* stackPop(Stack* stack);
-Cell* stackPeek(Stack* stack);
 
 // Checks
 bool isValidMove(int x, int y, int size);
 bool isEmpty(Stack* stack);
 bool isFull(Stack* stack);
 
+// Operations 
+void stackPush(Stack* stack, Cell* item);
+Cell* stackPop(Stack* stack);
+Cell* stackPeek(Stack* stack);
 
 #endif

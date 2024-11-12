@@ -1,22 +1,28 @@
+#include "dfs.h"
 #include <time.h>
-#include "maze.h"
+
+#define SIZE 10
 
 int main(void){
-    // Seed random number generatos
+    // Seed random number gen
     srand((unsigned)time(NULL));
 
-    // Create the maze
-    Maze* maze = initMaze(10, 1, 0, 8, 9);
+    // Initialization
+    Maze* maze = initMaze(SIZE, 0, 0, SIZE - 1, SIZE - 1);
+    Stack* stack = initStack(SIZE * SIZE);
 
-    // Create a stack
-    Stack* stack = initStack(10 * 10);
-    
     // Generate Maze
-    generateMaze(maze, stack);
+    generateMazeDFS(maze, stack);
 
-    // Display the maze
-    //displayMaze(maze);
-
+    // Free everythinh
+    for(int row = 0; row < SIZE; row++){
+        for(int col = 0; col < SIZE; col++){
+            free(maze->map[row][col]);
+        }
+        free(maze->map[row]);
+    }
     free(maze);
+    //free(stack);
+
     return 0;
 }
