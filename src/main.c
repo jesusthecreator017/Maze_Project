@@ -1,7 +1,8 @@
 #include "dfs.h"
+#include "bfs.h"
 #include <time.h>
 
-#define SIZE 10
+#define SIZE 15
 
 int main(void){
     // Seed random number gen
@@ -10,11 +11,19 @@ int main(void){
     // Initialization
     Maze* maze = initMaze(SIZE, 0, 0, SIZE - 1, SIZE - 1);
     Stack* stack = initStack(SIZE * SIZE);
+    Queue* queue = initQueue(SIZE * SIZE);
 
     // Generate Maze
     generateMazeDFS(maze, stack);
 
-    // Free everythinh
+    // Reset visited states and Calculate the distances of each cell form the ending
+    resetVisited(maze);
+    calculateDistance(maze, queue);
+
+    // Print the maze again with updated distances
+    displayMazeDistances(maze);
+
+    // Free Everything
     for(int row = 0; row < SIZE; row++){
         for(int col = 0; col < SIZE; col++){
             free(maze->map[row][col]);
@@ -22,7 +31,10 @@ int main(void){
         free(maze->map[row]);
     }
     free(maze);
-    //free(stack);
+    free(stack->data);
+    free(stack);
+    free(queue->data);
+    free(queue);
 
     return 0;
 }

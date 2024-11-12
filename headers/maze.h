@@ -14,6 +14,7 @@
 typedef struct cell{
   int x;
   int y;
+  int distance;
   bool visited;
   unsigned char data;
   unsigned char walls;
@@ -24,6 +25,13 @@ typedef struct stack{
     unsigned capacity;
     Cell** data; // Array of Cell Pointers
 } Stack;
+
+typedef struct queue{
+    Cell** data; // Array of Cell Pointers
+    unsigned capacity;
+    int back;
+    int front; 
+} Queue;
 
 typedef struct maze{
     Cell*** map;
@@ -37,19 +45,29 @@ typedef struct maze{
 // Initialization
 Cell* initCell(int x, int y);
 Stack* initStack(unsigned capacity);
+Queue* initQueue(unsigned capacity);
 Maze* initMaze(unsigned size, int sX, int sY, int eX, int eY);
 
 // Rendering
 void displayMaze(Maze* maze);
+void displayMazeDistances(Maze* maze);
 
 // Checks
 bool isValidMove(int x, int y, int size);
 bool isEmpty(Stack* stack);
 bool isFull(Stack* stack);
+bool isQueueEmpty(Queue* queue);
+bool isQueueFull(Queue* queue);
 
 // Operations 
+void resetVisited(Maze* maze);
+
 void stackPush(Stack* stack, Cell* item);
 Cell* stackPop(Stack* stack);
 Cell* stackPeek(Stack* stack);
+
+void enqueue(Queue* queue, Cell* item);
+void dequeue(Queue* queue);
+Cell* queuePeek(Queue* queue);
 
 #endif
