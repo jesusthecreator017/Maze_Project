@@ -1,2 +1,10 @@
 # Maze_Project
-We discover the algorithms to maze generation and traversal!
+A project that dives into different data structures and algorithms to randomly generate mazes.
+Data Structures:
+- Stacks
+- Queues
+- Priority Queues
+
+Algorithms:
+- Depth First Search
+- Breadth First Search
